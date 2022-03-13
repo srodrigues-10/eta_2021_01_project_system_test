@@ -32,6 +32,7 @@ public class BasePage {
     //Ações com o teclado
     protected void escrever(By by, String texto) {
         DriverManager.getDriverWait().until(ExpectedConditions.presenceOfElementLocated(by));
+        DriverManager.getDriver().findElement(by).clear();
         DriverManager.getDriver().findElement(by).sendKeys(texto);
     }
 
@@ -41,7 +42,7 @@ public class BasePage {
         return DriverManager.getDriver().getTitle();
     }
 
-    public String getTextoElemento(By by) {
+    protected String getTextoElemento(By by) {
         DriverManager.getDriverWait().until(ExpectedConditions.presenceOfElementLocated(by));
         return DriverManager.getDriver().findElement(by).getText();
     }

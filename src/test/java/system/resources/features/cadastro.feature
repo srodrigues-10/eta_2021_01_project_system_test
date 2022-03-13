@@ -11,6 +11,7 @@
       E com a página de cadastro de Pessoa física exibida por default
       Quando o usuário preencher todo o formulário com os dados "cadastro_pessoa_fisica.xlsx"
       E clicar no botão Cadastrar
+      Então o usuário será redirecionado para a página principal com o título "Produtos Térmicos feitos pra vida toda | Stanley" estando logado
 
 
 
