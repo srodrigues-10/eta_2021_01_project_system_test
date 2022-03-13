@@ -1,6 +1,9 @@
 package system.helpers;
 
 import java.security.SecureRandom;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class GeneralFuncions {
 
@@ -82,6 +85,19 @@ public class GeneralFuncions {
         return numeroGerado;
     }
 
+    public static String getDataHoraAtual() {
+        // Criação das Variáveis
+        Date dataAtual;
+        String dataAtualFormatada;
 
+        // Instanciando objetos
+        DateFormat format = new SimpleDateFormat("ddMMyyyyHHmmss");
+
+        // Setando valores nas variáveis
+        dataAtual = new Date();
+        dataAtualFormatada = format.format(dataAtual);
+
+        return dataAtualFormatada;
+    }
 
 }
