@@ -1,5 +1,15 @@
 package system.helpers;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.util.Iterator;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import java.security.SecureRandom;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -98,6 +108,169 @@ public class GeneralFuncions {
         dataAtualFormatada = format.format(dataAtual);
 
         return dataAtualFormatada;
+    }
+
+    /*
+     * Função: encontrarColuna(String arqExcelFile, String column, String aba)
+     *
+     * Realiza a busca pela coluna passada por parametro na aba tbm passada via
+     * parametro e retorna o numero dessa coluna, caso nao seja encontrada,
+     * retornara -1. arquivo de um determinado diretorio de origem para um
+     * determinado diretorio de destino.
+     *
+     * Parametros:
+     *
+     * String arqExcelFile -> Recebera o caminho do arquivo xlsx
+     * String column -> Coluna que sera procurada
+     * String aba -> Aba pesquisada, caso seja passado uma string vazia (""), buscara na primeira aba
+     *
+     */
+    private static int encontrarColuna(String arqExcelFile, String column, String aba) {
+
+        File excelFile = new File(arqExcelFile);
+        boolean encontrado = false;
+        int cols = 0;
+        XSSFWorkbook workbook;
+
+        // Realiza a busca pela coluna
+        try (FileInputStream fis = new FileInputStream(excelFile)) {
+
+            // Inicia a planilha
+            workbook = new XSSFWorkbook(fis);
+            XSSFSheet sheet;
+
+            // Valida aba que sera aberta
+            if(aba.length() == 0) {
+                sheet = workbook.getSheetAt(0);
+            }else {
+                sheet = workbook.getSheet(aba);
+            }
+            Iterator<Row> rowIt = sheet.iterator();
+
+            // Captura a posicao da coluna
+            Row row = rowIt.next();
+            Iterator<Cell> cellIterator = row.cellIterator();
+            Cell cell = null;
+            while (cellIterator.hasNext()) {
+                cell = cellIterator.next();
+                if (cell.toString().equals(column)) {
+                    encontrado = true;
+                    break;
+                } else {
+                    cols++;
+                }
+            }
+
+            // Fecha o workbook
+            workbook.close();
+
+        } catch (Exception e) {
+            System.out.println("Erro ao encontrar coluna da captura do XLSX.");
+        }
+
+        // Retorna a coluna caso tenha sido encontrada
+        if(encontrado) {
+            return cols;
+        }else {
+            return -1;
+        }
+
+    }
+
+    public static String retornarCellEmString(Cell cell) {
+        try {
+            return cell.getStringCellValue();
+        }catch(IllegalStateException e) {
+            return Integer.toString((int) cell.getNumericCellValue());
+        }
+    }
+
+    public static String capturarValorDoXLSX(String arqExcelFile, String column) {
+
+        // Encontra coluna
+        int cols = encontrarColuna(arqExcelFile, column, "");
+
+        // Cria o arquivo do Excel
+        File excelFile = new File(arqExcelFile);
+
+        try (FileInputStream fis = new FileInputStream(excelFile)){
+
+            // Inicia a planilha
+            XSSFWorkbook workbook = new XSSFWorkbook(fis);
+            XSSFSheet sheet = workbook.getSheetAt(0);
+            Iterator<Row> rowIt = sheet.iterator();
+
+            // Captura a posicao da coluna
+            Row row = rowIt.next();
+
+            // Variavel de linhas
+            int rows = 0;
+
+            // Valida que encontrou um resultado
+            if (cols!=-1) {
+
+                // Salva os valores e captura o final
+                row = sheet.getRow(rows + 1);
+                Cell cell1 = row.getCell(cols);
+
+                // Fecha a planilha de input
+                workbook.close();
+
+                // Retorna o valor da celula em String
+                return retornarCellEmString(cell1);
+
+            } else {
+
+                // Fecha a planilha de input
+                workbook.close();
+
+                return null;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Erro ao abrir a planilha de inputs: " + e + "  Coluna: " + column + "  Planilha: " + excelFile);
+            return "";
+        }
+    }
+
+    public static void alterarValorDoXLSX(String arqExcelFile, String column, String valor) {
+
+        // Encontra coluna
+        int cols = encontrarColuna(arqExcelFile, column, "");
+
+        // Cria o arquivo do Excel
+        File excelFile = new File(arqExcelFile);
+
+        try (FileInputStream fis = new FileInputStream(excelFile)){
+
+            // Inicia a planilha
+            XSSFWorkbook workbook = new XSSFWorkbook(fis);
+            XSSFSheet sheet = workbook.getSheetAt(0);
+            Iterator<Row> rowIt = sheet.iterator();
+
+            // Captura a posicao da coluna
+            int rows = 0;
+            Row row = rowIt.next();
+
+            // Salva os valores
+            row = sheet.getRow(rows + 1);
+            Cell cell1 = row.getCell(cols);
+
+            // Altera o valor
+            cell1.setCellValue(valor);
+
+            // Salva as alteracoes
+            FileOutputStream fileOut = new FileOutputStream(excelFile);
+            workbook.write(fileOut);
+            fileOut.close();
+
+            // Fecha a planilha de input
+            workbook.close();
+
+        } catch (Exception e) {
+            System.out.println("Erro ao alterar a planilha: " + arqExcelFile + "   Coluna: " + column + "     " + e);
+        }
+
     }
 
 }

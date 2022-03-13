@@ -4,6 +4,7 @@ import io.cucumber.java.pt.Então;
 import io.cucumber.java.pt.Quando;
 import org.junit.jupiter.api.Assertions;
 import system.helpers.GeneralFuncions;
+import system.helpers.ResourcesConstants;
 import system.pages.CadastroUsuarioPage;
 
 public class CadastroUsuarioSteps {
@@ -26,61 +27,74 @@ public class CadastroUsuarioSteps {
 
         //Inserindo Email
         String email = "alexsantos_" + GeneralFuncions.getDataHoraAtual() + "@gmail.com";
-        System.out.println(email);
+        System.out.println("Novo email gerado:" + email);
         cadastroUsuarioPage.preencherCampoEmail(email);
         GeneralFuncions.esperaFixa(1000);
 
         //Inserindo CPF
         String cpf = GeneralFuncions.geradorCPF(false);
-        System.out.println(cpf);
+        System.out.println("Primeiro CPF gerado: " + cpf);
         cadastroUsuarioPage.preencherCampoCPF(cpf);
         GeneralFuncions.esperaFixa(1000);
 
         //Inserindo Nome do Destinatário
-        cadastroUsuarioPage.preencherCampoNomeDestinatario("Alex da Silva Santos");
+        cadastroUsuarioPage.preencherCampoNomeDestinatario(GeneralFuncions.capturarValorDoXLSX(ResourcesConstants.DATA_CAD_PESSOAS_FISICAS_PATH,
+                "NOME_DESTINATARIO"));
         GeneralFuncions.esperaFixa(1000);
 
         //Inserindo Nome Completo
-        cadastroUsuarioPage.preencherCampoNomeCompleto("Alex da Silva Santos");
+        cadastroUsuarioPage.preencherCampoNomeCompleto(GeneralFuncions.capturarValorDoXLSX(ResourcesConstants.DATA_CAD_PESSOAS_FISICAS_PATH,
+                "NOME_COMPLETO"));
         GeneralFuncions.esperaFixa(1000);
 
         //Inserindo CEP
-        cadastroUsuarioPage.preencherCampoCEP("02860001");
+        cadastroUsuarioPage.preencherCampoCEP(GeneralFuncions.capturarValorDoXLSX(ResourcesConstants.DATA_CAD_PESSOAS_FISICAS_PATH,
+                "CEP"));
         GeneralFuncions.esperaFixa(1000);
 
         //Inserindo Data de Nascimento
-        cadastroUsuarioPage.preencherCampoDataNascimento("01021991");
+        cadastroUsuarioPage.preencherCampoDataNascimento(GeneralFuncions.capturarValorDoXLSX(ResourcesConstants.DATA_CAD_PESSOAS_FISICAS_PATH,
+                "DATA_NASCIMENTO"));
         GeneralFuncions.esperaFixa(1000);
 
         //Inserindo Senha
-        cadastroUsuarioPage.preencherCampoSenha("ab123456");
+        cadastroUsuarioPage.preencherCampoSenha(GeneralFuncions.capturarValorDoXLSX(ResourcesConstants.DATA_CAD_PESSOAS_FISICAS_PATH,
+                "SENHA"));
         GeneralFuncions.esperaFixa(1000);
 
         //Inserindo Confirmação de Senha
-        cadastroUsuarioPage.preencherCampoConfirmacaoSenha("ab123456");
+        cadastroUsuarioPage.preencherCampoConfirmacaoSenha(GeneralFuncions.capturarValorDoXLSX(ResourcesConstants.DATA_CAD_PESSOAS_FISICAS_PATH,
+                "SENHA"));
         GeneralFuncions.esperaFixa(1000);
 
         //Inserindo DDD do telefone principal
-        cadastroUsuarioPage.preencherCampoDDDTelPrincipal("11");
+        cadastroUsuarioPage.preencherCampoDDDTelPrincipal(GeneralFuncions.capturarValorDoXLSX(ResourcesConstants.DATA_CAD_PESSOAS_FISICAS_PATH,
+                "DDD_TELEFONE_PRINCIPAL"));
         GeneralFuncions.esperaFixa(1000);
 
         //Inserindo Telefone Principal
-        cadastroUsuarioPage.preencherCampoTelPrincipal("33409292");
+        cadastroUsuarioPage.preencherCampoTelPrincipal(GeneralFuncions.capturarValorDoXLSX(ResourcesConstants.DATA_CAD_PESSOAS_FISICAS_PATH,
+                "TELEFONE_PRINCIPAL"));
         GeneralFuncions.esperaFixa(1000);
 
         //Inserindo Número do Endereço
-        cadastroUsuarioPage.preencherCampoNumero("35");
+        cadastroUsuarioPage.preencherCampoNumero(GeneralFuncions.capturarValorDoXLSX(ResourcesConstants.DATA_CAD_PESSOAS_FISICAS_PATH,
+                "NUMERO_ENDERECO"));
         GeneralFuncions.esperaFixa(2000);
 
         //WA Validação CPF:
         int x = 0;
         while ((x < 20) && (cadastroUsuarioPage.getTextValidacaoCPF().length() > 0)){
-            String newCpf = GeneralFuncions.geradorCPF(false);
-            System.out.println("Novo CPF:" + newCpf);
-            cadastroUsuarioPage.preencherCampoCPF(newCpf);
+            cpf = GeneralFuncions.geradorCPF(false);
+            System.out.println("Novo CPF:" + cpf);
+            cadastroUsuarioPage.preencherCampoCPF(cpf);
             cadastroUsuarioPage.clicarLabelCPF();
             x++;
         }
+
+        //Alteração dos novos dados gerados para o usuário na planilha de dados
+        GeneralFuncions.alterarValorDoXLSX(ResourcesConstants.DATA_CAD_PESSOAS_FISICAS_PATH, "NOVO_CPF", cpf);
+        GeneralFuncions.alterarValorDoXLSX(ResourcesConstants.DATA_CAD_PESSOAS_FISICAS_PATH, "NOVO_EMAIL", email);
 
     }
 
