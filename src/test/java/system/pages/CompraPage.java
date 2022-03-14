@@ -15,10 +15,16 @@ public class CompraPage {
     private By buttonEntrar = By.cssSelector("div.fbits-box-login > form > div:nth-child(5) > button");
     private By telaProdutos = By.className("logoHome");
 //    private By telaProdutosBar = By.cssSelector(".seguraMenuLemoon li:nth-child(1) > a > img");
-    private By telaProdutosBar = By.xpath("div.seguraMenuLemoon > div > div > div > div > div > div > ul > li:nth-child(1) > a > img");
-    private By produto = By.id("produto-spot-imagem-98490-1");
-    private By buttonAddCarrinho = By.id("produto-botao-adicionar-carrinho-98490");
+//    private By telaProdutosBar = By.xpath("div.seguraMenuLemoon > div > div > div > div > div > div > ul > li:nth-child(1) > a > img");
+    private By telaProdutosBar = By.cssSelector(".item:first-child .menu-geral");
 
+    private By produto = By.id("produto-spot-imagem-98490-1");
+    private By aceitarCookies = By.cssSelector("#bodyProduto > footer > div.lgpd-modal > div > div.content-right > div > a");
+    private By buttonComprar = By.cssSelector("input[value='COMPRAR']");
+    private By buttonFinalizarCompra = By.cssSelector(".btfinalizar:nth-child(1)");
+    private By buttonTipoFrete = By.cssSelector("input[type=\"radio\"]:nth-child(1)");
+    private By pagBoleto = By.id("g2237-tab");
+    private By efetuarCompra = By.cssSelector("botao-padrao botao-verde");
 
     //Ações inserir dados
 
@@ -53,8 +59,22 @@ public class CompraPage {
         DriverManager.getDriverWait().until(ExpectedConditions.presenceOfElementLocated(produto));
         DriverManager.getDriver().findElement(produto).click();
         //Adicionando ao carrinho
-        DriverManager.getDriverWait().until(ExpectedConditions.presenceOfElementLocated(buttonAddCarrinho));
-        DriverManager.getDriver().findElement(buttonAddCarrinho).click();
+        DriverManager.getDriverWait().until(ExpectedConditions.presenceOfElementLocated(aceitarCookies));
+        DriverManager.getDriver().findElement(aceitarCookies).click();
+        DriverManager.getDriverWait().until(ExpectedConditions.presenceOfElementLocated(buttonComprar));
+        DriverManager.getDriver().findElement(buttonComprar).click();
+    }
+    public void finalizarCompra(){
+        DriverManager.getDriverWait().until(ExpectedConditions.presenceOfElementLocated(buttonFinalizarCompra));
+        DriverManager.getDriver().findElement(buttonFinalizarCompra).click();
+    }
+    public void selecionarTipoFrete(){
+        DriverManager.getDriverWait().until(ExpectedConditions.presenceOfElementLocated(buttonTipoFrete));
+        DriverManager.getDriver().findElement(buttonTipoFrete).click();
+    }
+    public void selecionarFromaPagamento(){
+        DriverManager.getDriverWait().until(ExpectedConditions.presenceOfElementLocated(pagBoleto));
+        DriverManager.getDriver().findElement(pagBoleto).click();
     }
 }
 

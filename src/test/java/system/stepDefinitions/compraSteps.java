@@ -19,17 +19,23 @@ public class compraSteps {
     public void inserir_um_produto_no_carrinho() {
         compraPage.acessarTelaProdutos();
         compraPage.addProdutoCarrinho();
-
-    }
-
-    @Quando("acessar o carrinho")
-    public void acessar_o_carrinho() {
-
+        try{
+            Thread.sleep(3000);
+        }
+        catch(InterruptedException ie){
+        }
     }
 
     @Então("deverá finalizar a compra por boleto")
     public void deverá_finalizar_a_compra_por_boleto() {
-
+        compraPage.finalizarCompra();
+        try{
+            Thread.sleep(3000);
+        }
+        catch(InterruptedException ie){
+        }
+        compraPage.selecionarTipoFrete();
+        compraPage.selecionarFromaPagamento();
     }
 
 }
