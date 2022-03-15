@@ -52,6 +52,11 @@ public class CompraPage extends BasePage{
     }
     public void finalizarCompra(){
         DriverManager.getDriverWait().until(ExpectedConditions.presenceOfElementLocated(buttonFinalizarCompra));
+        try{
+            Thread.sleep(3000);
+        }
+        catch(InterruptedException ie){
+        }
         DriverManager.getDriver().findElement(buttonFinalizarCompra).click();
     }
     public void selecionarTipoFrete(){
