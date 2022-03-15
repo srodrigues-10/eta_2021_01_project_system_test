@@ -29,13 +29,9 @@ public class compraSteps {
     @Então("deverá finalizar a compra por boleto")
     public void deverá_finalizar_a_compra_por_boleto() {
         compraPage.finalizarCompra();
-        try{
-            Thread.sleep(3000);
-        }
-        catch(InterruptedException ie){
-        }
         compraPage.selecionarTipoFrete();
         compraPage.selecionarFromaPagamento();
+        compraPage.efetuarCompra();
     }
 
 }
