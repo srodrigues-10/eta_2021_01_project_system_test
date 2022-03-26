@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="system-testing" />
         <module name="ProjetoFinalTestesSistema" />
+        <module name="eta_2021_project_system_test" />
       </profile>
     </annotationProcessing>
   </component>
