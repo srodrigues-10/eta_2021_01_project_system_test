@@ -2,7 +2,8 @@
 
 Funcionalidade: Feature correspondente aos cenários de busca no site Stanley
 
-  @buscarProduto
+  #Rayane Ferreira
+  @done @buscarProduto
   Esquema do Cenario: Realizar uma busca com filtros menor preço e contar quantidade de retorno
     Dado que o usuário acesse a página principal do site stanley
     Quando selecionar o botão de buscar
@@ -12,6 +13,6 @@ Funcionalidade: Feature correspondente aos cenários de busca no site Stanley
       |total_de_produtos|
       |           "21"  |
 
-
-
+  #Renato Veloso
+  @verificarPedidos
   Cenario: Verificar pedidos realizados

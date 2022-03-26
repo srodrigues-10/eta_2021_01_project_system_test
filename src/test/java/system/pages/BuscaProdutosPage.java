@@ -23,27 +23,27 @@ public class BuscaProdutosPage extends BasePage {
 
     //interações
     public void pesquisaPor(String texto) {
+        clicarElementoVisivel(btnBuscarproduto);
 
-        clicarElementoVisivel(btnBuscarproduto);
-        clicarElementoVisivel(poupMenu);
-        clicarElementoVisivel(btnBuscarproduto);
+        if (isElementoVisivel(poupMenu)){
+            clicarElementoVisivel(poupMenu);
+            clicarElementoVisivel(btnBuscarproduto);
+        }
+
         GeneralFuncions.esperaFixa(2000);
         escrever(campodeBuscar,texto);
         GeneralFuncions.esperaFixa(4000);
         clicarElementoVisivel(termosSugeridos);
         clicarElementoVisivel(selOrdenarMenorPreco);
-
     }
+
     public void clicaBotãoBusca() {
         DriverManager.getDriverWait().until(ExpectedConditions.presenceOfElementLocated(btnBuscarproduto));
         clicarElementoVisivel(btnBuscarproduto);
-
-
     }
+
     public String getQtdeResultadoFiltrado() {
         return getTextoElemento(labelTotaldeProd);
     }
-
-
 
 }

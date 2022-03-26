@@ -3,6 +3,7 @@
   @cadastro
   Funcionalidade: Feature correspondente aos cenários de cadastros em geral do site Stanley
 
+    #Sandro Rodrigues
     @done @cadastro
     Cenario: Realizar cadastro de usuário com sucesso
       Dado que o usuário acesse a página principal do site stanley

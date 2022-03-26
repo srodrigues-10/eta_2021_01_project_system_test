@@ -2,6 +2,7 @@ package system.stepDefinitions;
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Então;
 import io.cucumber.java.pt.Quando;
+import system.helpers.GeneralFuncions;
 import system.pages.CompraPage;
 
 public class compraSteps {
@@ -19,11 +20,7 @@ public class compraSteps {
     public void inserir_um_produto_no_carrinho() {
         compraPage.acessarTelaProdutos();
         compraPage.addProdutoCarrinho();
-        try{
-            Thread.sleep(3000);
-        }
-        catch(InterruptedException ie){
-        }
+        GeneralFuncions.esperaFixa(3000);
     }
 
     @Então("deverá finalizar a compra por boleto")
