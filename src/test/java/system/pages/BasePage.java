@@ -1,11 +1,14 @@
 package system.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import system.helpers.DriverManager;
 import system.helpers.GeneralFuncions;
+
+import java.security.Key;
 
 public class BasePage {
 
@@ -34,6 +37,12 @@ public class BasePage {
         DriverManager.getDriverWait().until(ExpectedConditions.presenceOfElementLocated(by));
         DriverManager.getDriver().findElement(by).clear();
         DriverManager.getDriver().findElement(by).sendKeys(texto);
+    }
+    //Ações de escrever sem localizadores
+    protected void escreverEnter(By by) {
+        DriverManager.getDriverWait().until(ExpectedConditions.presenceOfElementLocated(by));
+        DriverManager.getDriver().findElement(by).clear();
+        DriverManager.getDriver().findElement(by).sendKeys(Keys.ENTER);
     }
 
 
