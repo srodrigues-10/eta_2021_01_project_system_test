@@ -1,0 +1,4 @@
+*.class
+
+# Ignora a pasta target
+/target/

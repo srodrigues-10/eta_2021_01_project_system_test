@@ -3,6 +3,7 @@ package system.pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import system.helpers.DriverManager;
+import system.helpers.GeneralFuncions;
 
 import static java.lang.Thread.*;
 
@@ -16,7 +17,9 @@ public class CompraPage extends BasePage{
     private By telaProdutos = By.className("logoHome");
     private By telaProdutosBar = By.cssSelector(".item:first-child .menu-geral");
     private By produto = By.id("produto-spot-imagem-98490-1");
+    private By produtoMenor = By.id("produto-spot-imagem-98490-2");
     private By aceitarCookies = By.cssSelector("#bodyProduto > footer > div.lgpd-modal > div > div.content-right > div > a");
+    private By permitirCookies = By.cssSelector("a[class='aceitar-cookies']");
     private By buttonComprar = By.cssSelector("input[value='COMPRAR']");
     private By buttonFinalizarCompra = By.cssSelector(".btfinalizar:nth-child(1)");
     private By buttonTipoFrete = By.cssSelector("input[type=\"radio\"]:nth-child(1)");
@@ -45,18 +48,18 @@ public class CompraPage extends BasePage{
         //Tela de produtos Bar
         clicarElementoVisivel(telaProdutosBar);
         //Selecionando produto
-        clicarElementoVisivel(produto);
+        clicarElementoVisivel(permitirCookies);
+        GeneralFuncions.esperaFixa(1000);
+        mouseOverElementoVisivel(produto);
+        GeneralFuncions.esperaFixa(1000);
+        clicarElementoVisivel(produtoMenor);
         //Adicionando ao carrinho
-        clicarElementoVisivel(aceitarCookies);
-        clicarElementoVisivel(buttonComprar);
+        clicar(buttonComprar);
     }
+
     public void finalizarCompra(){
         DriverManager.getDriverWait().until(ExpectedConditions.presenceOfElementLocated(buttonFinalizarCompra));
-        try{
-            Thread.sleep(3000);
-        }
-        catch(InterruptedException ie){
-        }
+        GeneralFuncions.esperaFixa(3000);
         DriverManager.getDriver().findElement(buttonFinalizarCompra).click();
     }
     public void selecionarTipoFrete(){
@@ -64,20 +67,11 @@ public class CompraPage extends BasePage{
     }
     public void selecionarFromaPagamento(){
         clicarElementoVisivel(pagBoleto);
-        try{
-            Thread.sleep(3000);
-        }
-        catch(InterruptedException ie){
-        }
+        GeneralFuncions.esperaFixa(3000);
     }
     public void efetuarCompra(){
         clicarElementoVisivel(efetuarCompra);
-        try{
-            Thread.sleep(6000);
-        }
-        catch(InterruptedException ie){
-        }
-
+        GeneralFuncions.esperaFixa(6000);
     }
 
 }

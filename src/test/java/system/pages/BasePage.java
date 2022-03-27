@@ -1,6 +1,7 @@
 package system.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -9,6 +10,7 @@ import system.helpers.DriverManager;
 import system.helpers.GeneralFuncions;
 
 import java.security.Key;
+import java.util.List;
 
 public class BasePage {
 
@@ -31,20 +33,19 @@ public class BasePage {
         GeneralFuncions.esperaFixa(1000);
     }
 
-
     //Ações com o teclado
     protected void escrever(By by, String texto) {
         DriverManager.getDriverWait().until(ExpectedConditions.presenceOfElementLocated(by));
         DriverManager.getDriver().findElement(by).clear();
         DriverManager.getDriver().findElement(by).sendKeys(texto);
     }
+
     //Ações de escrever sem localizadores
     protected void escreverEnter(By by) {
         DriverManager.getDriverWait().until(ExpectedConditions.presenceOfElementLocated(by));
         DriverManager.getDriver().findElement(by).clear();
         DriverManager.getDriver().findElement(by).sendKeys(Keys.ENTER);
     }
-
 
     //Açoes de recuperação de textos
     protected String getTituloPagina(){
@@ -61,5 +62,32 @@ public class BasePage {
         DriverManager.getDriverWait().until(ExpectedConditions.presenceOfElementLocated(by));
         return DriverManager.getDriver().findElement(by).isSelected();
     }
+
+    //Ações de Scroll
+    protected Object scrollUpDownToElemento(By by){
+        DriverManager.getDriverWait().until(ExpectedConditions.presenceOfElementLocated(by));
+        WebElement elemento = DriverManager.getDriver().findElement(by);
+        JavascriptExecutor js = (JavascriptExecutor) DriverManager.getDriver();
+        return js.executeScript("window.scrollBy(0, arguments[0])", elemento.getLocation().y);
+    }
+
+    //Aguardar Elemento Visivel
+    protected boolean isElementoVisivel(By by) {
+       Boolean isDisplayed = false;
+       try {
+           isDisplayed = DriverManager.getDriver().findElement(by).isDisplayed();
+       } catch (Exception e){
+           isDisplayed = false;
+       }
+       return isDisplayed;
+    }
+
+    //Retornar quantidade Elementos
+    protected int getQuantidadeElementos(By by) {
+        DriverManager.getDriverWait().until(ExpectedConditions.presenceOfAllElementsLocatedBy(by));
+        List<WebElement> qtdElementos = DriverManager.getDriver().findElements(by);
+        return qtdElementos.size();
+    }
+
 
 }
