@@ -9,12 +9,11 @@ import org.junit.runner.RunWith;
         features = "src/test/java/system/resources/features",
         glue = "system/stepDefinitions",
         plugin = {"pretty"},
-        tags = "@done and @compra",
+        tags = "@done",
         snippets = CucumberOptions.SnippetType.CAMELCASE,
         dryRun = false,
         monochrome = false
 )
 
 public class Runner {
-
 }

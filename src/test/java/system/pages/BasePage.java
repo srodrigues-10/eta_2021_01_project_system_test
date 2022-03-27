@@ -10,6 +10,7 @@ import system.helpers.DriverManager;
 import system.helpers.GeneralFuncions;
 
 import java.security.Key;
+import java.util.List;
 
 public class BasePage {
 
@@ -71,7 +72,7 @@ public class BasePage {
     }
 
     //Aguardar Elemento Visivel
-    public boolean isElementoVisivel(By by) {
+    protected boolean isElementoVisivel(By by) {
        Boolean isDisplayed = false;
        try {
            isDisplayed = DriverManager.getDriver().findElement(by).isDisplayed();
@@ -79,6 +80,13 @@ public class BasePage {
            isDisplayed = false;
        }
        return isDisplayed;
+    }
+
+    //Retornar quantidade Elementos
+    protected int getQuantidadeElementos(By by) {
+        DriverManager.getDriverWait().until(ExpectedConditions.presenceOfAllElementsLocatedBy(by));
+        List<WebElement> qtdElementos = DriverManager.getDriver().findElements(by);
+        return qtdElementos.size();
     }
 
 

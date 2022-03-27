@@ -14,5 +14,9 @@ Funcionalidade: Feature correspondente aos cenários de busca no site Stanley
       |           "21"  |
 
   #Renato Veloso
-  @verificarPedidos
+  @done @verificarPedidos
   Cenario: Verificar pedidos realizados
+    Dado que o usuário acesse a página principal do site stanley
+    Quando  realizar login com informações válidas "alexsantos_13032022150114@gmail.com" "ab123456"
+    E selecionar o menu Meus Pedidos na página Minha Conta
+    Então o usuário irá visualisar 6 pedidos
